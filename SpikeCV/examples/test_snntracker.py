@@ -30,7 +30,7 @@ from metrics.tracking_mot_v2 import TrackingMetrics
 import pathlib
 from pathlib import Path
 
-def main():
+def main(args=None):
     try:
         print("REMOTE_HOST_RUN:", os.uname().nodename)
     except AttributeError:
@@ -42,19 +42,20 @@ def main():
     RESULTS_DIR = SCRIPT_DIR / "results"
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    parser = argparse.ArgumentParser(description=__doc__, 
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--scene_idx", "-s", type=int, default=0,help="Index of the test scene")
-    parser.add_argument("--attention_size", "-attn_size", type=int, default=15,help="Size of attention window")
+    if args is None:
+        parser = argparse.ArgumentParser(description=__doc__, 
+                                        formatter_class=argparse.RawDescriptionHelpFormatter)
+        parser.add_argument("--scene_idx", "-s", type=int, default=0,help="Index of the test scene")
+        parser.add_argument("--attention_size", "-attn_size", type=int, default=15,help="Size of attention window")
 
-    parser.add_argument("--data_path", "-d", type=str, default="motVidarReal2020/",help="Path to dataset root")
-    parser.add_argument("--label_type", "-l", type=str, default="tracking",help="Label type")
-    parser.add_argument("--metrics", "-m", action="store_true",help="Enable quantitative metrics (requires GT)")
-    args = parser.parse_args()
+        parser.add_argument("--data_path", "-d", type=str, default="motVidarReal2020/",help="Path to dataset root")
+        parser.add_argument("--label_type", "-l", type=str, default="tracking",help="Label type")
+        parser.add_argument("--metrics", "-m", action="store_true",help="Enable quantitative metrics (requires GT)")
+        args = parser.parse_args()
 
     # TODO: 测试 no ground truth 的算法能否正确运行、可视化
     # change the path to where you put the datasets
-    test_scene = ['spike59', 'rotTrans', 'cplCam', 'cpl1', 'badminton', 'ball', 'badminton-l1', 'badminton-l2', 'pingpong']
+    test_scene = ['spike59', 'rotTrans', 'cplCam', 'cpl1', 'ball', 'badminton', 'pingpong']
     # data_filename = 'motVidarReal2020/rotTrans'
     attention_size = args.attention_size
     data_name = test_scene[args.scene_idx]

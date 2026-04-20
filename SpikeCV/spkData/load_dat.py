@@ -8,7 +8,7 @@ import warnings
 import ctypes
 
 sys.path.append('../device/spikevision/m1k40')
-from sdk import spikelinkapi as link
+from device.spikevision.m1k40.sdk import spikelinkapi as link
 
 import numpy as np
 import torch
