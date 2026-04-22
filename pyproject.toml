@@ -26,8 +26,7 @@ dependencies = [
     "tqdm",
     "lpips",
     "pyiqa",
-    "colour-demosaicing",
-    "typer>=0.9.0"
+    "colour-demosaicing"
 ]
 authors = [
     {name = "PKU, and other contributors", email = "yj.zheng@pku.edu.cn"}
@@ -80,11 +79,13 @@ test = [
 # SpikeCV CLI
 cli = [
     "typer>=0.9.0",
+    "openi"
 ]
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["spikecv"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["spikecv*"]
